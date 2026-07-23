@@ -16,23 +16,16 @@ struct AppState {
 
 #[derive(Serialize)]
 struct AppsResponse {
-    arch: String,
     common: Vec<String>,
-    specific: Vec<String>,
+    x32: Vec<String>,
+    x64: Vec<String>,
 }
 
-fn detect_arch() -> String {
-    if let Ok(v) = std::env::var("PROCESSOR_ARCHITEW6432") {
-        if v.eq_ignore_ascii_case("AMD64") || v.eq_ignore_ascii_case("ARM64") {
-            return "x64".to_string();
-        }
-    }
-    if let Ok(v) = std::env::var("PROCESSOR_ARCHITECTURE") {
-        if v.eq_ignore_ascii_case("AMD64") || v.eq_ignore_ascii_case("ARM64") {
-            return "x64".to_string();
-        }
-    }
-    "x32".to_string()
+fn keys_of(json: &Value, key: &str) -> Vec<String> {
+    json.get(key)
+        .and_then(|v| v.as_object())
+        .map(|o| o.keys().cloned().collect())
+        .unwrap_or_default()
 }
 
 #[tauri::command]
@@ -44,27 +37,13 @@ async fn fetch_apps(state: State<'_, AppState>) -> Result<AppsResponse, String> 
         .await
         .map_err(|e| format!("Failed to parse data: {e}"))?;
 
-    let arch = detect_arch();
-
-    let common: Vec<String> = json
-        .get("common")
-        .and_then(|v| v.as_object())
-        .map(|o| o.keys().cloned().collect())
-        .unwrap_or_default();
-
-    let specific: Vec<String> = json
-        .get(&arch)
-        .and_then(|v| v.as_object())
-        .map(|o| o.keys().cloned().collect())
-        .unwrap_or_default();
+    let common = keys_of(&json, "common");
+    let x32 = keys_of(&json, "x32");
+    let x64 = keys_of(&json, "x64");
 
     *state.data.lock().unwrap() = Some(json);
 
-    Ok(AppsResponse {
-        arch,
-        common,
-        specific,
-    })
+    Ok(AppsResponse { common, x32, x64 })
 }
 
 #[tauri::command]

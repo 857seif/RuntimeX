@@ -3,8 +3,14 @@ const { listen } = window.__TAURI__.event;
 
 const commonList = document.getElementById("common-list");
 const specificList = document.getElementById("specific-list");
+const specificTitle = document.getElementById("specific-title");
 const archLabel = document.getElementById("arch-label");
 const statusEl = document.getElementById("status");
+const archSelect = document.getElementById("arch-select");
+const content = document.getElementById("content");
+const backBtn = document.getElementById("back-btn");
+
+let appsData = null;
 
 function safeId(name) {
   return name.replace(/[^a-zA-Z0-9]/g, "_");
@@ -55,28 +61,44 @@ function renderEmpty(container) {
   container.appendChild(p);
 }
 
+function showArch(arch) {
+  commonList.innerHTML = "";
+  specificList.innerHTML = "";
+
+  archSelect.classList.add("hidden");
+  content.classList.remove("hidden");
+  archLabel.textContent = (arch === "x64" ? "64-bit" : "32-bit") + " selected";
+  specificTitle.textContent = (arch === "x64" ? "64-bit" : "32-bit") + " Files";
+
+  if (appsData.common.length === 0) {
+    renderEmpty(commonList);
+  } else {
+    appsData.common.forEach((name) => renderItem(commonList, "common", name));
+  }
+
+  const list = appsData[arch] || [];
+  if (list.length === 0) {
+    renderEmpty(specificList);
+  } else {
+    list.forEach((name) => renderItem(specificList, arch, name));
+  }
+}
+
+backBtn.addEventListener("click", () => {
+  content.classList.add("hidden");
+  archSelect.classList.remove("hidden");
+  archLabel.textContent = "Choose your system type";
+  statusEl.textContent = "";
+});
+
+document.querySelectorAll(".arch-btn").forEach((btn) => {
+  btn.addEventListener("click", () => showArch(btn.dataset.arch));
+});
+
 async function init() {
   statusEl.textContent = "Loading list...";
   try {
-    const data = await invoke("fetch_apps");
-
-    archLabel.textContent =
-      "Detected " + (data.arch === "x64" ? "64-bit" : "32-bit") + " system";
-
-    if (data.common.length === 0) {
-      renderEmpty(commonList);
-    } else {
-      data.common.forEach((name) => renderItem(commonList, "common", name));
-    }
-
-    if (data.specific.length === 0) {
-      renderEmpty(specificList);
-    } else {
-      data.specific.forEach((name) =>
-        renderItem(specificList, data.arch, name)
-      );
-    }
-
+    appsData = await invoke("fetch_apps");
     statusEl.textContent = "";
   } catch (e) {
     statusEl.textContent = "Failed to load list: " + e;

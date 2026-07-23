@@ -12,20 +12,32 @@
       <div class="logo">⚡</div>
       <div class="title-box">
         <h1>RuntimeX</h1>
-        <p id="arch-label" class="subtitle">Detecting system...</p>
+        <p id="arch-label" class="subtitle">Choose your system type</p>
       </div>
     </header>
 
     <p id="status" class="status"></p>
 
-    <main class="content">
+    <div id="arch-select" class="arch-select">
+      <button class="arch-btn" data-arch="x32">
+        <span class="arch-btn-title">32-bit</span>
+        <span class="arch-btn-sub">x86</span>
+      </button>
+      <button class="arch-btn" data-arch="x64">
+        <span class="arch-btn-title">64-bit</span>
+        <span class="arch-btn-sub">x64</span>
+      </button>
+    </div>
+
+    <main id="content" class="content hidden">
+      <button id="back-btn" class="back-btn">← Change system type</button>
       <section class="section">
         <h2>Common Files</h2>
         <div id="common-list" class="list"></div>
       </section>
 
       <section class="section">
-        <h2>For Your System Architecture</h2>
+        <h2 id="specific-title">Architecture Files</h2>
         <div id="specific-list" class="list"></div>
       </section>
     </main>
