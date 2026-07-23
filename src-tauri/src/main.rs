@@ -102,17 +102,8 @@ fn run_installer(path: &PathBuf) -> Result<(), String> {
         .to_lowercase();
 
     match ext.as_str() {
-        "exe" => {
-            std::process::Command::new(path)
-                .spawn()
-                .map_err(|e| format!("Failed to launch installer: {e}"))?;
-        }
-        "msi" => {
-            std::process::Command::new("msiexec")
-                .arg("/i")
-                .arg(path)
-                .spawn()
-                .map_err(|e| format!("Failed to launch msiexec: {e}"))?;
+        "exe" | "msi" => {
+            launch_via_shell(path)?;
         }
         "ps1" => {
             #[cfg(target_os = "windows")]
@@ -141,6 +132,27 @@ fn run_installer(path: &PathBuf) -> Result<(), String> {
         _ => {
             return Err(format!("Unsupported extension: {ext}"));
         }
+    }
+    Ok(())
+}
+
+fn launch_via_shell(path: &PathBuf) -> Result<(), String> {
+    #[cfg(target_os = "windows")]
+    {
+        use std::os::windows::process::CommandExt;
+        const CREATE_NO_WINDOW: u32 = 0x08000000;
+        std::process::Command::new("cmd")
+            .arg("/C")
+            .arg("start")
+            .arg("")
+            .arg(path)
+            .creation_flags(CREATE_NO_WINDOW)
+            .spawn()
+            .map_err(|e| format!("Failed to launch installer: {e}"))?;
+    }
+    #[cfg(not(target_os = "windows"))]
+    {
+        return Err("Installers only run on Windows".to_string());
     }
     Ok(())
 }
