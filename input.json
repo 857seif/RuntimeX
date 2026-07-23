@@ -1,1 +1,16 @@
-
+{
+    "common": {
+        "dotNetFx40_Full_setup.exe": "https://raw.githubusercontent.com/857seif/RuntimeX/main/input/common/dotNetFx40_Full_setup.exe",
+        "dxwebsetup.exe": "https://raw.githubusercontent.com/857seif/RuntimeX/main/input/common/dxwebsetup.exe",
+        "oalinst.exe": "https://raw.githubusercontent.com/857seif/RuntimeX/main/input/common/oalinst.exe",
+        "xnafx40_redist.msi": "https://raw.githubusercontent.com/857seif/RuntimeX/main/input/common/xnafx40_redist.msi"
+    },
+    "x32": {
+        "vcredist_2015-2019_x86.exe": "https://raw.githubusercontent.com/857seif/RuntimeX/main/input/x32/vcredist_2015-2019_x86.exe",
+        "vcredist_x86.exe": "https://raw.githubusercontent.com/857seif/RuntimeX/main/input/x32/vcredist_x86.exe"
+    },
+    "x64": {
+        "vcredist_2015-2019_x64.exe": "https://raw.githubusercontent.com/857seif/RuntimeX/main/input/x64/vcredist_2015-2019_x64.exe",
+        "vcredist_x64.exe": "https://raw.githubusercontent.com/857seif/RuntimeX/main/input/x64/vcredist_x64.exe"
+    }
+}
