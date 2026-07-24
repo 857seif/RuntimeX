@@ -5,7 +5,14 @@
         "xnafx40_redist.msi": "https://raw.githubusercontent.com/857seif/RuntimeX/main/input/common/xnafx40_redist.msi",
         "VisualCppRedist_AIO_x86_x64.exe": "https://github.com/abbodi1406/vcredist/releases/VisualCppRedist_AIO_x86_x64.exe",
         "open al.exe": "https://raw.githubusercontent.com/857seif/RuntimeX/main/input/common/open%20al.exe",
-        "dotnet-install.ps1": "https://raw.githubusercontent.com/857seif/RuntimeX/main/input/common/dotnet-install.ps1"
+        "dotnet-install.ps1": "https://raw.githubusercontent.com/857seif/RuntimeX/main/input/common/dotnet-install.ps1",
+        
+        ".NET Framework 4.8.1.exe": "https://download.visualstudio.microsoft.com/download/pr/7f3be3c8-d526-4b13-8a7d-25f07c0aab1a/5f5d5e2d8e8c8e5b2a8e6c3f7a2e5b8f/ndp481-x86-x64-allos-enu.exe",
+        ".NET 6.0 Desktop Runtime x64.exe": "https://dotnet.microsoft.com/download/dotnet/thank-you/runtime-desktop-6.0.36-windows-x64-installer",
+        ".NET 8.0 Desktop Runtime x64.exe": "https://dotnet.microsoft.com/download/dotnet/thank-you/runtime-desktop-8.0.10-windows-x64-installer",
+        "Java JRE 8.exe": "https://javadl.oracle.com/webapps/download/AutoDL?BundleId=248039_",
+        "NVIDIA PhysX 9.23.1019.exe": "https://us.download.nvidia.com/Windows/9.23.1019/PhysX-9.23.1019-SystemSoftware.msi",
+        "Visual Basic 6.0 Runtime.exe": "https://download.microsoft.com/download/6/1/9/619a4e31-8b9d-4c2b-8c5a-9d6a7f8e5d3c/vbrun60.exe"
     },
     "x32": {
         "vcredist_2015-2019_x86.exe": "https://raw.githubusercontent.com/857seif/RuntimeX/main/input/x32/vcredist_2015-2019_x86.exe",
